@@ -29,14 +29,17 @@
             <router-link :to="{ name: 'home-customer' }">
             <li>
               <a href="#"
-                 class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent hover:text-white lg:p-0  text-purple-700"
-                 aria-current="page">Home</a>
+                 :class="currentRoute === 'home-customer' ? 'text-white' : 'text-purple-700'"
+                 class="block py-2 pl-3 pr-4  bg-purple-700 rounded lg:bg-transparent hover:text-white lg:p-0  "
+                 aria-current="page"
+              >Home</a>
             </li>
             </router-link>
             <router-link :to="{ name: 'list-recipes-customer' }">
             <li>
               <a href="#"
-                 class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                 :class="currentRoute === 'list-recipes-customer' ? 'text-white' : 'text-gray-400'"
+                 class="block py-2 pl-3 pr-4  border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0  lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
                 Cream Recipes</a>
             </li>
             </router-link>
@@ -44,7 +47,8 @@
             <router-link :to="{ name: 'list-books-customer' }">
             <li>
               <a href="#"
-                 class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                 :class="currentRoute === 'list-books-customer' ? 'text-white' : 'text-gray-400'"
+                 class="block py-2 pl-3 pr-4  border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0  lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
                 Books</a>
             </li>
             </router-link>
@@ -53,14 +57,16 @@
 
             <li>
               <a href="#"
-                 class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                 :class="currentRoute === 'faq' ? 'text-white' : 'text-gray-400'"
+                 class="block py-2 pl-3 pr-4  border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0  lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
                 FAQ</a>
             </li>
             </router-link>
             <router-link :to="{ name: 'contact' }">
             <li>
               <a href="#"
-                 class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                 :class="currentRoute === 'contact' ? 'text-white' : 'text-gray-400'"
+                 class="block py-2 pl-3 pr-4  border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0  lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
                 Contact</a>
             </li>
             </router-link>
@@ -139,7 +145,15 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+const router = useRouter();
 
+const currentRoute = ref(null);
+
+onMounted(() => {
+  currentRoute.value = router.currentRoute.value.name;
+});
 </script>
 
 <style scoped>
