@@ -1,7 +1,7 @@
 <template>
   <LayoutCustomer>
-    <div class="px-40 mt-30 flex gap-4">
-      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="p-16 mb-0">
+      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-0">
         <h2 class="mb-4 text-2xl font-bold text-gray-700">Frequently Asked Questions</h2>
         <div class="mb-4">
           <h3 class="text-xl font-semibold text-gray-900">Question 1</h3>
