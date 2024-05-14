@@ -1,4 +1,5 @@
 import Login from "@/views/Auth/LoginAdmin.vue";
+import LoginCustomer from "@/views/Auth/LoginCustomer.vue";
 import ListRecipes from "@/views/ManageRecipe/Index.vue";
 import DetailRecipes from "@/views/ManageRecipe/Detail.vue";
 import ListBook from "@/views/ManageBooks/Index.vue";
@@ -16,12 +17,18 @@ import FAQ from "@/views/HomeCustomer/FAQ.vue";
 import Contact from "@/views/HomeCustomer/Contact.vue";
 
 export const routes = [
-    //customer
+    //customer LoginCustomer
     {
         path: "/",
         component: Home,
         meta: {title: 'Home'},
         name: 'home-customer'
+    },
+    {
+        path: "/login",
+        component: LoginCustomer,
+        meta: {title: 'Login'},
+        name: 'login-customer'
     },
     {
         path: "/list-recipes-customer",
