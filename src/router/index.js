@@ -1,4 +1,5 @@
 import Login from "@/views/Auth/LoginAdmin.vue";
+import CallBack from "@/views/Auth/CallBack.vue";
 import LoginCustomer from "@/views/Auth/LoginCustomer.vue";
 import ListRecipes from "@/views/ManageRecipe/Index.vue";
 import DetailRecipes from "@/views/ManageRecipe/Detail.vue";
@@ -29,6 +30,12 @@ export const routes = [
         component: LoginCustomer,
         meta: {title: 'Login'},
         name: 'login-customer'
+    },
+    {
+        path: "/{params}",
+        component: CallBack,
+        meta: {title: 'callback'},
+        name: 'callback'
     },
     {
         path: "/list-recipes-customer",
