@@ -25,7 +25,7 @@
               class="ml-4 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
             Sign Up
           </button>
-          <div v-show="user" class="flex items-center">
+          <div v-show="user" class="flex items-center ">
             <img v-if="user" class="shadow-lg w-8 h-8 mr-2 rounded-full" :src="genAvatar(user.name)" alt="">
             <span v-if="user" class="mr-2">{{user.name}}</span>
             <button @click="logout"
@@ -223,7 +223,14 @@
           <el-input v-model="formState.email" type="email" placeholder="Please input email"/>
         </el-form-item>
         <el-form-item label="Plan" prop="planId" >
-          <el-input v-model="formState.planId" placeholder="Please select planId"/>
+          <el-select v-model="formState.planId" placeholder="Please select a plan">
+            <el-option
+                v-for="plan in plans"
+                :key="plan.id"
+                :label="plan.planType"
+                :value="plan.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="Username" prop="username" >
           <el-input v-model="formState.username"  placeholder="Please input username"/>
@@ -302,6 +309,7 @@ const checkUser = async () => {
     try {
       const { data } = await $axios.get('Users/Current');
       user.value = data;
+      localStorage.setItem('user',JSON.stringify(data))
     } catch (error) {
       console.error('Lấy thông tin người dùng thất bại:', error);
       localStorage.removeItem('token');
@@ -318,9 +326,22 @@ onMounted(() => {
 });
 const logout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('user');
   user.value = null;
   router.push('/')
 }
+const plans = [
+  {
+    id: 1,
+    planType: "Monthly",
+    price: 15
+  },
+  {
+    id: 2,
+    planType: "Yearly",
+    price: 150
+  }
+];
 </script>
 
 <style scoped>

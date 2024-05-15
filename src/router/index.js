@@ -16,6 +16,8 @@ import ListRecipesCus from "@/views/HomeCustomer/ListRecipe.vue";
 import ListBookCus from "@/views/HomeCustomer/ListBooks.vue";
 import FAQ from "@/views/HomeCustomer/FAQ.vue";
 import Contact from "@/views/HomeCustomer/Contact.vue";
+import DetailRecipe from "@/views/HomeCustomer/DetailRecipe.vue";
+import DetailBookCus from "@/views/HomeCustomer/DetailBook.vue";
 
 export const routes = [
     //customer LoginCustomer
@@ -32,7 +34,7 @@ export const routes = [
         name: 'login-customer'
     },
     {
-        path: "/{params}",
+        path: "/callback",
         component: CallBack,
         meta: {title: 'callback'},
         name: 'callback'
@@ -42,6 +44,18 @@ export const routes = [
         component: ListRecipesCus,
         meta: {title: 'ListRecipesCus'},
         name: 'list-recipes-customer'
+    },
+    {
+        path: "/detail-recipes/:id",
+        component: DetailRecipe,
+        meta: {title: 'Detail Recipe'},
+        name: 'detail-recipe-customer'
+    },
+    {
+        path: "/detail-book/:id",
+        component: DetailBookCus,
+        meta: {title: 'Detail Book'},
+        name: 'detail-book-customer'
     },
     {
         path: "/list-books-customer",
