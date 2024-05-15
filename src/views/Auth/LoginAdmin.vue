@@ -43,13 +43,15 @@ const formState = reactive({
 });
 
 const login = () => {
-  $axios.post('api/login', {
+  $axios.post('Auth/Login/', {
     username:formState.email,
     password:formState.password
   })
       .then((data) => {
-        if (data.data.access_token){
-          localStorage.setItem('token',data.data.access_token)
+
+        if (data.data.accessToken){
+          localStorage.setItem('token',data.data.accessToken)
+          console.log(data)
           router.push('/')
         }
       })
