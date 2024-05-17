@@ -5,7 +5,7 @@
         <div class="w-1/2 rounded-lg">
           <img class="rounded-lg" src="/various-varieties-ice-cream-cones-various-varieties-ice-cream-cones-mint-blueberry-strawberry-pistachio-cherry-158155767.png" alt="">
         </div>
-        <div class="w-1/2 p-6 rounded-lg shadow-lg ">
+        <div class="w-1/2 p-6 rounded-lg shadow-lg flex gap-4 flex-col ml-4 ">
           <h2 class="mb-4 text-2xl font-bold bg-clip-text bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 inline-block" style="color: transparent">Contact Us</h2>
           <div class="">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
