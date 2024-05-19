@@ -18,8 +18,9 @@ import FAQ from "@/views/HomeCustomer/FAQ.vue";
 import Contact from "@/views/HomeCustomer/Contact.vue";
 import DetailRecipe from "@/views/HomeCustomer/DetailRecipe.vue";
 import DetailBookCus from "@/views/HomeCustomer/DetailBook.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
-export const routes = [
+const routerCustom = [
     //customer LoginCustomer
     {
         path: "/",
@@ -138,3 +139,46 @@ export const routes = [
         name: 'detail-user'
     },
 ];
+
+const createCustomRouter = () =>
+    createRouter({
+        history: createWebHistory(""),
+        routes: routerCustom,
+        scrollBehavior(to) {
+            if (to.hash) {
+                return {
+                    el: to.hash,
+                    behavior: "smooth",
+                };
+            }
+        },
+    });
+
+const router = createCustomRouter();
+
+router.beforeEach(async (to, from, next) => {
+    // set title
+    const appName = "Cream";
+
+    document.title = to.meta?.title ? to.meta.title + " - " + appName : appName;
+
+    const token = localStorage.getItem("token");
+    const isAdminRoute = to.path.startsWith("/admin");
+
+    // If the user is not authenticated and trying to access an admin route, redirect to login
+    if (isAdminRoute && !token) {
+        if (to.name !== 'login') {
+            next({
+                name: 'login',
+            });
+        } else {
+            next();
+        }
+        return;
+    }
+
+    next();
+});
+
+
+export default router;

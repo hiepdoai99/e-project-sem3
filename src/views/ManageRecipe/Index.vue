@@ -1,13 +1,13 @@
 <template>
   <LayoutAdmin>
-    <div class="w-full flex flex-col">
-      <div>
+    <div class="flex flex-col w-full">
+      <div class="p-4">
         <h1 class="font-semibold text-2xl">Manage Recipe</h1>
       </div>
-      <div class="mt-6 p-1">
+      <div class="mt-6 ml-6 mr-6">
         <el-table :data="recipes"
                   stripe
-                  style="width: 100% ;border-radius: 8px ; border: 1px solid #ebeef5;"
+                  style="width: 98% ;border-radius: 8px ; border: 1px solid #ebeef5;"
                   size="large"
                   :header-cell-style="{
             'font-size': '12px',
@@ -22,7 +22,7 @@
             color: '#000000D9',
           }"
         >
-          <el-table-column prop="userId" label="Created by" width="180"></el-table-column>
+          <el-table-column prop="authorName" label="Created by" width="180"></el-table-column>
           <el-table-column prop="title" label="Title" width="180" ></el-table-column>
           <el-table-column prop="ingredients" label="Ingredients" width="180"></el-table-column>
           <el-table-column prop="description" label="Description" width="180"></el-table-column>

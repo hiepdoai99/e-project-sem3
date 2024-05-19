@@ -1,18 +1,11 @@
-import { createApp } from "vue";
+import {createApp} from "vue";
 import App from "./App.vue";
 import "./index.css";
-import { routes } from "./router/index.js";
-import { createRouter, createWebHistory } from "vue-router";
+import router from "./router";
 import ElementPlus from 'element-plus'
-
 
 const app = createApp(App);
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-app.use(router);
-app.use(ElementPlus)
-app.mount("#app");
+ app.use(router)
+    .use(ElementPlus)
+    .mount("#app");

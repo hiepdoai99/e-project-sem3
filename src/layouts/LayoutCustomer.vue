@@ -281,8 +281,7 @@ const register = () => {
   })
       .then((data) => {
         if (data.data){
-          window.open(data.data, '_blank');
-          // console.log(router.query);
+          window.location.href = data.data;
         }
       })
 };

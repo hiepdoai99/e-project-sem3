@@ -20,16 +20,16 @@ $axios.interceptors.response.use(
     (response) => Promise.resolve(response),
     (error) => {
         console.log(error);
-        // const res = error.response;
-        // const status = res.status;
-        // if (status === 401) {
-        //     localStorage.clear()
-        // } else {
-        //     const message = error.response?.data?.Message;
-        //     if (message) {
-        //     }
-        //     return Promise.reject(error);
-        // }
+        const res = error.response;
+        const status = res.status;
+        if (status === 404){
+            console.log("404")
+        } else {
+            const message = error.response?.data?.Message;
+            if (message) {
+            }
+            return Promise.reject(error);
+        }
     }
 );
 export { $axios };
