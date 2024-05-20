@@ -18,6 +18,8 @@ import FAQ from "@/views/HomeCustomer/FAQ.vue";
 import Contact from "@/views/HomeCustomer/Contact.vue";
 import DetailRecipe from "@/views/HomeCustomer/DetailRecipe.vue";
 import DetailBookCus from "@/views/HomeCustomer/DetailBook.vue";
+import Cart from "@/views/HomeCustomer/Cart.vue";
+
 import { createRouter, createWebHistory } from "vue-router";
 
 const routerCustom = [
@@ -39,6 +41,12 @@ const routerCustom = [
         component: CallBack,
         meta: {title: 'callback'},
         name: 'callback'
+    },
+    {
+        path: "/cart",
+        component: Cart,
+        meta: {title: 'Cart'},
+        name: 'cart'
     },
     {
         path: "/list-recipes-customer",

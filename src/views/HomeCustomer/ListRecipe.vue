@@ -1,7 +1,7 @@
 <template>
   <LayoutCustomer>
     <div class="px-[120px] mt-[32px]  flex gap-4">
-        <div class="p-8 flex gap-4 flex-wrap">
+        <div class=" flex gap-4 flex-wrap">
           <div v-for="recipe in recipes" :key="recipe.in"
                class="w-[24%] bg-white border border-gray-100 rounded-lg shadow-xl">
             <div class="relative ">
