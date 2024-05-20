@@ -33,13 +33,12 @@
               Logout
             </button>
           </div>
-          <div class="bg-gray-300 rounded-full h-10 w-10  ml-2 flex items-center justify-center ">
+          <router-link :to="{ name: 'cart' }">
+          <div  class="bg-gray-300 rounded-full h-10 w-10  ml-2 flex items-center justify-center ">
             <el-icon><ShoppingCart /></el-icon>
-            <span class="absolute ml-6 mt-6">2</span>
+            <p class="absolute ml-6 -mt-6 bg-white text-gray-700 rounded-full h-[20px] w-[20px] flex items-center justify-center"><span class="text-sm">{{ getCartCount() }}</span></p>
           </div>
-
-
-
+        </router-link>
         </div>
         <div class="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
           <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
@@ -341,6 +340,7 @@ const genAvatar = (name) => {
 }
 onMounted(() => {
   currentRoute.value = router.currentRoute.value.name;
+  getCartCount()
   checkUser();
 });
 const logout = () => {
@@ -348,6 +348,21 @@ const logout = () => {
   localStorage.removeItem('user');
   user.value = null;
   router.push('/')
+}
+const getCartCount = () => {
+  // Lấy danh sách sách từ localStorage
+  let books = localStorage.getItem('books');
+  
+  // Nếu không có sách nào trong localStorage, trả về 0
+  if (!books) {
+    return 0;
+  }
+  
+  // Chuyển đổi chuỗi JSON thành mảng
+  books = JSON.parse(books);
+
+  // Trả về độ dài của mảng
+  return books.length;
 }
 const plans = [
   {

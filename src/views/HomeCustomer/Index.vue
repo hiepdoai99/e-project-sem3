@@ -37,9 +37,9 @@
             </div>
             <div class="p-5">
               <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-16">{{ recipe.title }}</h5>
+                <h5 class="mb-0 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-16">{{ recipe.title }}</h5>
               </a>
-              <p v-html="recipe.shortDescription" class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6"></p>
+              <p v-html="recipe.shortDescription" class="mb-1 line-clamp-2 h-12 font-normal text-gray-700 dark:text-gray-400 mt-6"></p>
                 <a href="#" @click="getDetailRecipe(recipe.id, recipe.type)"
                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Read more
@@ -80,13 +80,11 @@
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 ">{{ book.title }}</h5>
               </a>
               <p class="mb-3 font-normal text-gray-700  line-clamp-2  ">{{ book.description }}</p>
-              <p class="mb-3 font-normal  text-gray-700 "> <span class="font-bold">Price:</span> {{ book.price }} $</p>
-              <router-link :to="{ name: 'detail-book-customer' ,params: { id: book.id }  }">
-                <a href="#"
+              <p class="mb-3 font-normal  text-gray-700 "> <span class="font-bold">Price:</span> ${{ book.price }}</p>
+                <a href="#" @click="addToCart(book.id)"
                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Buy now
+                  Add to cart
                 </a>
-              </router-link>
             </div>
           </div>
         </div>
@@ -343,6 +341,29 @@ const getBooks = async () => {
       .then((data) => {
         books.value = data.data.slice(0, 4);
       });
+}
+const addToCart = (id) => {
+  // Lấy danh sách sách từ localStorage
+  let books = localStorage.getItem('books');
+  
+  // Nếu không có sách nào trong localStorage, khởi tạo mảng rỗng
+  if (!books) {
+    books = [];
+  } else {
+    // Chuyển đổi chuỗi JSON thành mảng
+    books = JSON.parse(books);
+  }
+  if (!books.includes(id)) {
+    // Nếu chưa tồn tại, thêm ID của sách mới vào mảng
+    books.push(id);
+  }
+  
+
+  // Chuyển đổi mảng thành chuỗi JSON
+  const booksJSON = JSON.stringify(books);
+
+  // Lưu chuỗi JSON trở lại localStorage
+  localStorage.setItem('books', booksJSON);
 }
 onBeforeMount(() => {
   getRecipes()
