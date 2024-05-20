@@ -22,17 +22,24 @@
           </button>
           <!--          </router-link>-->
           <button v-show="!user" @click="showSignUp = true"
-              class="ml-4 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
+                  class="ml-4 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
             Sign Up
           </button>
           <div v-show="user" class="flex items-center ">
             <img v-if="user" class="shadow-lg w-8 h-8 mr-2 rounded-full" :src="genAvatar(user.name)" alt="">
-            <span v-if="user" class="mr-2">{{user.name}}</span>
+            <span v-if="user" class="mr-2">{{ user.name }}</span>
             <button @click="logout"
-                class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
+                    class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
               Logout
             </button>
           </div>
+          <div class="bg-gray-300 rounded-full h-10 w-10  ml-2 flex items-center justify-center ">
+            <el-icon><ShoppingCart /></el-icon>
+            <span class="absolute ml-6 mt-6">2</span>
+          </div>
+
+
+
         </div>
         <div class="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
           <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
@@ -184,16 +191,16 @@
           class="demo-ruleForm"
           label-position="top"
       >
-        <el-form-item label="Username" prop="Username" >
-          <el-input v-model="formState.username"  placeholder="Please input username"/>
+        <el-form-item label="Username" prop="Username">
+          <el-input v-model="formState.username" placeholder="Please input username"/>
         </el-form-item>
-        <el-form-item label="Password" prop="password" >
-          <el-input v-model="formState.password" type="password" show-password  placeholder="Please input password" />
+        <el-form-item label="Password" prop="password">
+          <el-input v-model="formState.password" type="password" show-password placeholder="Please input password"/>
         </el-form-item>
         <el-form-item>
           <div class="flex w-full">
             <div></div>
-            <div  class="ml-auto">
+            <div class="ml-auto">
               <el-button type="primary" @click="login">
                 Login
               </el-button>
@@ -216,13 +223,13 @@
           class="demo-ruleForm"
           label-position="top"
       >
-        <el-form-item label="Name" prop="name" >
-          <el-input v-model="formState.name" type="email" placeholder="Please input name" />
+        <el-form-item label="Name" prop="name">
+          <el-input v-model="formState.name" type="email" placeholder="Please input name"/>
         </el-form-item>
-        <el-form-item label="Email" prop="email" >
+        <el-form-item label="Email" prop="email">
           <el-input v-model="formState.email" type="email" placeholder="Please input email"/>
         </el-form-item>
-        <el-form-item label="Plan" prop="planId" >
+        <el-form-item label="Plan" prop="planId">
           <el-select v-model="formState.planId" placeholder="Please select a plan">
             <el-option
                 v-for="plan in plans"
@@ -232,16 +239,16 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Username" prop="username" >
-          <el-input v-model="formState.username"  placeholder="Please input username"/>
+        <el-form-item label="Username" prop="username">
+          <el-input v-model="formState.username" placeholder="Please input username"/>
         </el-form-item>
-        <el-form-item label="Password" prop="password" >
-          <el-input v-model="formState.password" type="password" show-password  placeholder="Please input password" />
+        <el-form-item label="Password" prop="password">
+          <el-input v-model="formState.password" type="password" show-password placeholder="Please input password"/>
         </el-form-item>
         <el-form-item>
           <div class="flex w-full">
             <div></div>
-            <div  class="ml-auto">
+            <div class="ml-auto">
               <el-button type="primary" @click="register">
                 Sign Up
               </el-button>
@@ -258,6 +265,7 @@
 import {useRouter} from 'vue-router'
 import {ref, onMounted, reactive} from 'vue';
 import {$axios} from "../utils/request";
+import {ShoppingCart} from '@element-plus/icons-vue'
 
 const formState = reactive({
   name: '',
@@ -273,14 +281,14 @@ const showSignUp = ref(false);
 const currentRoute = ref(null);
 const register = () => {
   $axios.post('Auth/Register/', {
-    username:formState.username,
-    password:formState.password,
-    name:formState.name,
-    email:formState.email,
-    planId:formState.planId
+    username: formState.username,
+    password: formState.password,
+    name: formState.name,
+    email: formState.email,
+    planId: formState.planId
   })
       .then((data) => {
-        if (data.data){
+        if (data.data) {
           window.location.href = data.data;
         }
       })
@@ -288,13 +296,13 @@ const register = () => {
 
 const login = () => {
   $axios.post('Auth/Login/', {
-    username:formState.username,
-    password:formState.password
+    username: formState.username,
+    password: formState.password
   })
       .then((data) => {
 
-        if (data.data.accessToken){
-          localStorage.setItem('token',data.data.accessToken)
+        if (data.data.accessToken) {
+          localStorage.setItem('token', data.data.accessToken)
           localStorage.setItem('user', data.data.user)
           showLogin.value = false;
           checkUser();
@@ -307,9 +315,9 @@ const checkUser = async () => {
   const token = localStorage.getItem('token');
   if (token) {
     try {
-      const { data } = await $axios.get('Users/Current');
+      const {data} = await $axios.get('Users/Current');
       user.value = data;
-      localStorage.setItem('user',JSON.stringify(data))
+      localStorage.setItem('user', JSON.stringify(data))
     } catch (error) {
       console.error('Lấy thông tin người dùng thất bại:', error);
       localStorage.removeItem('token');
@@ -317,7 +325,7 @@ const checkUser = async () => {
     }
   }
 };
-const genAvatar = (name) =>{
+const genAvatar = (name) => {
   return 'https://ui-avatars.com/api/?name=' + name;
 }
 onMounted(() => {

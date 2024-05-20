@@ -34,7 +34,7 @@
                     class="text-base font-bold opacity-100 text-[#FFF] w-full h-full absolute top-0 flex items-center justify-center cursor-pointer"
                     @click="openModal"
                 >
-                  Xem thêm
+                  More
                 </div>
               </div>
             </div>

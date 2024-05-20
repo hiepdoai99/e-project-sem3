@@ -37,7 +37,7 @@
             </div>
             <div class="p-5">
               <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-10">{{ recipe.title }}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-16">{{ recipe.title }}</h5>
               </a>
               <p v-html="recipe.shortDescription" class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6"></p>
                 <a href="#" @click="getDetailRecipe(recipe.id, recipe.type)"
@@ -71,16 +71,16 @@
         </div>
         <div class="p-8 flex gap-4 rounded-lg shadow-lg">
           <div v-for="book in books" :key="book.in"
-               class="max-w-[25%] bg-white border border-gray-100 rounded-lg shadow-xl">
+               class="w-[calc(100%/4)] bg-white border border-gray-100 rounded-lg shadow-xl">
             <div class="relative">
-              <img class="rounded-t-lg" src="/ice-cream-2k.png" alt=""/>
+              <img class="rounded-t-lg  object-cover w-full  h-[240px]" :src="book.bookImages[0].image ? book.bookImages[0].image : '/ice-cream-2k.png'" alt=""/>
             </div>
             <div class="p-5">
               <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{ book.title }}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 ">{{ book.title }}</h5>
               </a>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ book.description }}</p>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ book.price }}</p>
+              <p class="mb-3 font-normal text-gray-700  line-clamp-2  ">{{ book.description }}</p>
+              <p class="mb-3 font-normal  text-gray-700 "> <span class="font-bold">Price:</span> {{ book.price }} $</p>
               <router-link :to="{ name: 'detail-book-customer' ,params: { id: book.id }  }">
                 <a href="#"
                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
