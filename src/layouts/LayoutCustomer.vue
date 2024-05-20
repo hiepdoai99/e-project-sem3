@@ -5,8 +5,8 @@
       <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
         <router-link :to="{ name: 'home-customer' }">
           <a href="#" class="flex items-center">
-            <img src="/ice-cream2.svg" class="h-6 mr-3 sm:h-9" alt="Cream">
-            <span class="self-center text-xl font-semibold whitespace-nowrap ">Cream</span>
+            <img src="/ice-cream2.svg" class="h-6 mr-3 sm:h-9" alt="Ice-Cream-Parlour">
+            <span class="self-center text-xl font-semibold whitespace-nowrap ">Ice Cream Parlour</span>
           </a>
         </router-link>
 
@@ -52,12 +52,23 @@
                 >Home</a>
               </li>
             </router-link>
+
+            <!-- about Us -->
+            <router-link :to="{ name: 'about-us' }">
+              <li>
+                <a href="#"
+                   :class="currentRoute === 'about-us' ? 'text-white' : 'text-gray-400'"
+                   class="block py-2 pl-3 pr-4  border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0  lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                  About Us</a>
+              </li>
+            </router-link>
+
             <router-link :to="{ name: 'list-recipes-customer' }">
               <li>
                 <a href="#"
                    :class="currentRoute === 'list-recipes-customer' ? 'text-white' : 'text-gray-400'"
                    class="block py-2 pl-3 pr-4  border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0  lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
-                  Cream Recipes</a>
+                  Ice Cream Recipes</a>
               </li>
             </router-link>
 

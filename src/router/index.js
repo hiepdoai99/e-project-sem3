@@ -19,61 +19,68 @@ import Contact from "@/views/HomeCustomer/Contact.vue";
 import DetailRecipe from "@/views/HomeCustomer/DetailRecipe.vue";
 import DetailBookCus from "@/views/HomeCustomer/DetailBook.vue";
 import { createRouter, createWebHistory } from "vue-router";
+import AboutUs from "../views/HomeCustomer/AboutUs.vue";
 
 const routerCustom = [
     //customer LoginCustomer
     {
         path: "/",
         component: Home,
-        meta: {title: 'Home'},
+        meta: { title: 'Home' },
         name: 'home-customer'
+    },
+    {
+        path: "/about-us",
+        component: AboutUs,
+        meta: { title: 'About Us' },
+        name: 'about-us'
     },
     {
         path: "/login",
         component: LoginCustomer,
-        meta: {title: 'Login'},
+        meta: { title: 'Login' },
         name: 'login-customer'
     },
     {
         path: "/callback",
         component: CallBack,
-        meta: {title: 'callback'},
+        meta: { title: 'callback' },
         name: 'callback'
     },
     {
         path: "/list-recipes-customer",
         component: ListRecipesCus,
-        meta: {title: 'ListRecipesCus'},
+        meta: { title: 'ListRecipesCus' },
         name: 'list-recipes-customer'
     },
     {
         path: "/detail-recipes/:id",
         component: DetailRecipe,
-        meta: {title: 'Detail Recipe'},
+        meta: { title: 'Detail Recipe' },
         name: 'detail-recipe-customer'
     },
     {
         path: "/detail-book/:id",
         component: DetailBookCus,
-        meta: {title: 'Detail Book'},
+        meta: { title: 'Detail Book' },
         name: 'detail-book-customer'
     },
     {
         path: "/list-books-customer",
         component: ListBookCus,
-        meta: {title: 'ListBook'},
+        meta: { title: 'ListBook' },
         name: 'list-books-customer'
     },
     {
         path: "/faq",
         component: FAQ,
-        meta: {title: 'FAQ'},
+        meta: { title: 'FAQ' },
         name: 'faq'
     },
     {
         path: "/contact",
         component: Contact,
-        meta: {title: 'Contact'},
+        meta: { title: 'Contact' },
         name: 'contact'
     },
 
@@ -84,13 +91,13 @@ const routerCustom = [
     {
         path: "/admin/login",
         component: Login,
-        meta: {title: 'Login'},
+        meta: { title: 'Login' },
         name: 'login'
     },
     {
         path: "/admin",
         component: ListRecipes,
-        meta: {title: 'Admin'},
+        meta: { title: 'Admin' },
         name: 'home'
     },
     {
