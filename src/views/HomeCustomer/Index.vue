@@ -39,9 +39,8 @@
               <a href="#">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-10">{{ recipe.title }}</h5>
               </a>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6">{{ recipe.shortDescription }}</p>
-              <router-link  :to="{ name: 'detail-recipe-customer' ,params: { id: recipe.id }  }">
-                <a href="#"
+              <p v-html="recipe.shortDescription" class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6"></p>
+                <a href="#" @click="getDetailRecipe(recipe.id, recipe.type)"
                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Read more
                   <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2 ml-1" aria-hidden="true"
@@ -51,7 +50,7 @@
                           d="M1 5h12m0 0L9 1m4 4L9 9"/>
                   </svg>
                 </a>
-              </router-link>
+
             </div>
           </div>
         </div>
@@ -60,7 +59,6 @@
         <div class="flex p-8  mt-10">
           <h1 class="text-2xl font-semibold">Book Recipe</h1>
           <router-link class="ml-auto text-red-400 flex" :to="{ name: 'list-books-customer' }">
-
             <p class="flex">Xem thêm
               <span class="mt-1 ml-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
@@ -76,7 +74,6 @@
                class="max-w-[25%] bg-white border border-gray-100 rounded-lg shadow-xl">
             <div class="relative">
               <img class="rounded-t-lg" src="/ice-cream-2k.png" alt=""/>
-<!--              <div class="absolute top-0 right-0 bg-gradient-to-l from-violet-500 to-fuchsia-500 p-2 rounded-bl-lg rounded-tr-lg">{{ typeRecipe[book.type].name }}</div>-->
             </div>
             <div class="p-5">
               <a href="#">
@@ -277,7 +274,6 @@
           </el-form-item>
         </el-form>
       </el-dialog>
-
     </div>
   </LayoutCustomer>
 </template>
@@ -289,6 +285,7 @@ import FormRecipe from "../../components/FormRecipe.vue";
 import {$axios} from "../../utils/request";
 import { $ax } from "../../utils/requestPost";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import router from "../../router";
 const editor = ClassicEditor;
 
 const toggleModal = () => {
@@ -298,8 +295,8 @@ const toggleModal = () => {
   }else {
     showLogin.value = true
   }
-
 }
+
 const showLogin = ref(false);
 const formState = reactive({
   name: '',
@@ -324,6 +321,7 @@ const login = () => {
 
         if (data.data.accessToken){
           localStorage.setItem('token',data.data.accessToken)
+          localStorage.setItem('user', data.data.user)
           showLogin.value = false;
           checkUser();
         }
@@ -350,6 +348,18 @@ onBeforeMount(() => {
   getRecipes()
   getBooks()
 })
+const getDetailRecipe = (id,type) => {
+  if (type == 1) {
+    router.push({name: 'detail-recipe-customer', params: {id: id}})
+  } else {
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.push({name: 'detail-recipe-customer', params: {id: id}})
+    } else {
+      showLogin.value = true
+    }
+  }
+}
 const typeRecipe = {
   0: {
     name: 'Premium'
@@ -419,8 +429,10 @@ const befoceImage = (e) => {
 
 // "Content-Type": "multipart/form-data"
 const postRecipe = () => {
+  const user = localStorage.getItem('user');
+
   $ax.post('/Users/Recipes', {
-    UserId: 5,
+    UserId: user.id,
     Title: formState.title,
     Ingredients: formState.ingredients,
     ShortDescription: formState.shortDescription,

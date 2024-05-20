@@ -12,9 +12,8 @@
               <a href="#">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-10">{{ recipe.title }}</h5>
               </a>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6 line-clamp-2 h-10">{{ recipe.shortDescription }}</p>
-              <router-link :to="{ name: 'detail-recipe-customer' ,params: { id: recipe.id }  }">
-                <a href="#"
+              <p v-html="recipe.shortDescription" class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6 line-clamp-2 h-10"></p>
+                <a href="#" @click="getDetailRecipe(recipe.id, recipe.type)"
                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Read more
                   <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2 ml-1" aria-hidden="true"
@@ -24,21 +23,74 @@
                           d="M1 5h12m0 0L9 1m4 4L9 9"/>
                   </svg>
                 </a>
-              </router-link>
             </div>
           </div>
         </div>
 
     </div>
+    <el-dialog
+        v-model="showLogin"
+        style="border-radius: 8px"
+        title="Login"
+        width="400"
+    >
+      <el-form
+          ref="ruleFormRef"
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          class="demo-ruleForm"
+          label-position="top"
+      >
+        <el-form-item label="Username" prop="Username" >
+          <el-input v-model="formState.username"  placeholder="Please input username"/>
+        </el-form-item>
+        <el-form-item label="Password" prop="password" >
+          <el-input v-model="formState.password" type="password" show-password  placeholder="Please input password" />
+        </el-form-item>
+        <el-form-item>
+          <div class="flex w-full">
+            <div></div>
+            <div  class="ml-auto">
+              <el-button type="primary" @click="login">
+                Login
+              </el-button>
+            </div>
+          </div>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </LayoutCustomer>
 
 </template>
 
 <script setup>
 import LayoutCustomer from "../../layouts/LayoutCustomer.vue";
-import {ref, onMounted, onBeforeMount} from "vue";
+import {ref, onMounted, onBeforeMount,reactive} from "vue";
 import {$axios} from "../../utils/request";
+import router from "../../router";
 const recipes = ref()
+const login = () => {
+  $axios.post('Auth/Login/', {
+    username:formState.username,
+    password:formState.password
+  })
+      .then((data) => {
+
+        if (data.data.accessToken){
+          localStorage.setItem('token',data.data.accessToken)
+          localStorage.setItem('user', data.data.user)
+          showLogin.value = false;
+          checkUser();
+        }
+      })
+};
+const formState = reactive({
+  username: '',
+  password: '',
+});
+
+const showLogin = ref(false);
 
 const getRecipes = async () => {
   await $axios.get('Recipes')
@@ -49,6 +101,18 @@ const getRecipes = async () => {
 onBeforeMount(() => {
   getRecipes()
 })
+const getDetailRecipe = (id,type) => {
+  if (type == 1) {
+    router.push({name: 'detail-recipe-customer', params: {id: id}})
+  } else {
+    const user = localStorage.getItem('user');
+    if (user) {
+      router.push({name: 'detail-recipe-customer', params: {id: id}})
+    } else {
+      showLogin.value = true
+    }
+  }
+}
 const typeRecipe = {
   0: {
     name: 'Premium'

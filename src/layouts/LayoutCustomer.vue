@@ -295,6 +295,7 @@ const login = () => {
 
         if (data.data.accessToken){
           localStorage.setItem('token',data.data.accessToken)
+          localStorage.setItem('user', data.data.user)
           showLogin.value = false;
           checkUser();
           router.push('/')

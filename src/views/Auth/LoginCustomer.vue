@@ -57,10 +57,9 @@ const login = () => {
     password: formState.password
   })
       .then((data) => {
-
         if (data.data.accessToken) {
           localStorage.setItem('token', data.data.accessToken)
-          console.log(data)
+          localStorage.setItem('user', data.data.user)
           router.push('/')
         }
       })
