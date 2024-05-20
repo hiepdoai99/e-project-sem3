@@ -27,7 +27,11 @@
           <el-table-column prop="title" label="Title" width="180" ></el-table-column>
           <el-table-column prop="ingredients" label="Ingredients" width="180"></el-table-column>
           <el-table-column prop="description" label="Description" width="180"></el-table-column>
-          <el-table-column prop="type" label="type" width="180"></el-table-column>
+          <el-table-column  label="type" width="180">
+            <template #default="{ row }">
+              <span>{{ typeRecipe[row.type].name }}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="createdAt" label="createdAt" width="180">
             <template #default="{ row }">
               <span>{{ formatDate(new Date(row.createdAt)) }}</span>
@@ -60,7 +64,29 @@ const getRecipes = async () => {
 onBeforeMount(() => {
   getRecipes()
 })
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
+  return `${year}/${month}/${day} - ${hours}:${minutes}`;
+}
+const typeRecipe = {
+  0: {
+    name: 'Premium'
+  },
+  1: {
+    name: 'Free'
+  },
+  2: {
+    name: 'Candidate'
+  },
+  3: {
+    name: 'Winner'
+  },
+}
 </script>
 
 <style scoped>

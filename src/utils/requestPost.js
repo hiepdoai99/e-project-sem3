@@ -1,22 +1,22 @@
 import axios from "axios";
-const $axios = axios.create({
+const $ax = axios.create({
     baseURL: "http://localhost:5180/api/",
     timeout: 20000,
 });
 
-$axios.interceptors.request.use(
+$ax.interceptors.request.use(
     (config) => ({
         ...config,
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             Accept: "application/json",
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data"
         },
     }),
     (error) => Promise.reject(error)
 );
 
-$axios.interceptors.response.use(
+$ax.interceptors.response.use(
     (response) => Promise.resolve(response),
     (error) => {
         const res = error.response;
@@ -31,4 +31,4 @@ $axios.interceptors.response.use(
         }
     }
 );
-export { $axios };
+export { $ax };

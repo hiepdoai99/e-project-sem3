@@ -5,6 +5,9 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { fileURLToPath, URL } from "url";
 import path from 'path'
+import ckeditor5 from '@ckeditor/vite-plugin-ckeditor5';
+
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,6 +17,7 @@ export default defineConfig({
     },
     plugins: [
         vue(),
+        ckeditor5( { theme: require.resolve( '@ckeditor/ckeditor5-theme-lark' ) } ),
         AutoImport({
             resolvers: [ElementPlusResolver()],
         }),

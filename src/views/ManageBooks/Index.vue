@@ -1,10 +1,10 @@
 <template>
   <LayoutAdmin>
-    <div class="flex flex-col ">
-      <div>
+    <div class="flex flex-col w-full">
+      <div class="p-4">
         <h1 class="font-semibold text-2xl">Manage Book</h1>
       </div>
-      <div class="mt-6 p-1">
+      <div class="mt-6 ml-6 mr-6">
         <el-table :data="books"
                   stripe
                   style="width: 98% ;border-radius: 8px ; border: 1px solid #ebeef5;"

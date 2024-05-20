@@ -3,16 +3,16 @@
     <div class="px-[120px] mt-[32px]  flex gap-4">
         <div class="p-8 flex gap-4 flex-wrap">
           <div v-for="recipe in recipes" :key="recipe.in"
-               class="max-w-[24%] bg-white border border-gray-100 rounded-lg shadow-xl">
-            <div class="relative">
-              <img class="rounded-t-lg" src="/ice-cream-2k.png" alt=""/>
+               class="w-[24%] bg-white border border-gray-100 rounded-lg shadow-xl">
+            <div class="relative ">
+              <img class="rounded-t-lg object-cover w-full  h-[240px]" :src="recipe.thumbnail ? recipe.thumbnail  : '/ice-cream-2k.png'" alt=""/>
               <div class="absolute top-0 right-0 bg-gradient-to-l from-violet-500 to-fuchsia-500 p-2 rounded-bl-lg rounded-tr-lg">{{ typeRecipe[recipe.type].name }}</div>
             </div>
             <div class="p-5">
               <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">{{ recipe.title }}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-10">{{ recipe.title }}</h5>
               </a>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Công thức</p>
+              <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6 line-clamp-2 h-10">{{ recipe.shortDescription }}</p>
               <router-link :to="{ name: 'detail-recipe-customer' ,params: { id: recipe.id }  }">
                 <a href="#"
                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

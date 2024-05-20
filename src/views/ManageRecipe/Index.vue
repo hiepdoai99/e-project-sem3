@@ -24,10 +24,13 @@
         >
           <el-table-column prop="authorName" label="Created by" width="180"></el-table-column>
           <el-table-column prop="title" label="Title" width="180" ></el-table-column>
-          <el-table-column prop="ingredients" label="Ingredients" width="180"></el-table-column>
-          <el-table-column prop="description" label="Description" width="180"></el-table-column>
-          <el-table-column prop="type" label="type" width="180"></el-table-column>
-          <el-table-column prop="createdAt" label="createdAt" width="180">
+          <el-table-column prop="shortDescription" label="ShortDescription" width="180"></el-table-column>
+          <el-table-column prop="type" label="Type" width="180">
+            <template #default="{ row }">
+              <span>{{ typeRecipe[row.type].name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="createdAt" label="CreatedAt" width="180">
             <template #default="{ row }">
               <span>{{ formatDate(new Date(row.createdAt)) }}</span>
             </template>
@@ -50,7 +53,20 @@ import {ref, onMounted, onBeforeMount} from "vue";
 import {$axios} from "../../utils/request";
 
 const recipes = ref()
-
+const typeRecipe = {
+  0: {
+    name: 'Premium'
+  },
+  1: {
+    name: 'Free'
+  },
+  2: {
+    name: 'Candidate'
+  },
+  3: {
+    name: 'Winner'
+  },
+}
 const getRecipes = async () => {
   await $axios.get('Recipes/Admin')
       .then((data) => {
