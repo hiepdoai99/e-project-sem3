@@ -10,6 +10,7 @@ import DetailTournamentsRecipe from "@/views/TournamentsRecipe/Detail.vue";
 import ListSubscribe from "@/views/ManageSubscribe/Index.vue";
 import DetailSubscribe from "@/views/ManageSubscribe/Detail.vue";
 import ManageOrder from "@/views/ManageOrder/Index.vue";
+import DetailOrder from "@/views/ManageOrder/DetailOrder.vue";
 import ManageFeedback from "@/views/ManageFeedback/Index.vue";
 import ListUsers from "@/views/ManageUsers/Index.vue";
 import DetailUser from "@/views/ManageUsers/Detail.vue";
@@ -124,6 +125,11 @@ const routerCustom = [
         path: "/admin/mannage-order",
         component: ManageOrder,
         name: 'mannage-order'
+    },
+    {
+        path: "/admin/detail-order/:id",
+        component: DetailOrder,
+        name: 'detail-order'
     },
     {
         path: "/admin/mannage-feedback",
