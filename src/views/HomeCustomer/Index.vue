@@ -383,20 +383,25 @@ const befoceImage = (e) => {
 // "Content-Type": "multipart/form-data"
 const postRecipe = () => {
   const user = localStorage.getItem('user');
+  if (user){
+    $ax.post('/Users/Recipes', {
+          UserId: user.id,
+          Title: formState.title,
+          Ingredients: formState.ingredients,
+          ShortDescription: formState.shortDescription,
+          Description: formState.description,
+          Type: formState.type,
+          Thumbnail: avatar.value
+        },
+    )
+        .then((data) => {
+          formRecipe.value = false;
+        })
+  }
+  else {
+    showLogin.value = true
+  }
 
-  $ax.post('/Users/Recipes', {
-    UserId: user.id,
-    Title: formState.title,
-    Ingredients: formState.ingredients,
-    ShortDescription: formState.shortDescription,
-    Description: formState.description,
-    Type: formState.type,
-    Thumbnail: avatar.value
-  },
-  )
-    .then((data) => {
-      formRecipe.value = false;
-    })
 }
 
 </script>
