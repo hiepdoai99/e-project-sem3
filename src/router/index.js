@@ -9,6 +9,8 @@ import ListTournamentsRecipe from "@/views/TournamentsRecipe/Index.vue";
 import DetailTournamentsRecipe from "@/views/TournamentsRecipe/Detail.vue";
 import ListSubscribe from "@/views/ManageSubscribe/Index.vue";
 import DetailSubscribe from "@/views/ManageSubscribe/Detail.vue";
+import ManageOrder from "@/views/ManageOrder/Index.vue";
+import ManageFeedback from "@/views/ManageFeedback/Index.vue";
 import ListUsers from "@/views/ManageUsers/Index.vue";
 import DetailUser from "@/views/ManageUsers/Detail.vue";
 import Home from "@/views/HomeCustomer/Index.vue";
@@ -117,6 +119,16 @@ const routerCustom = [
         path: "/admin/list-book",
         component: ListBook,
         name: 'list-book'
+    },
+    {
+        path: "/admin/mannage-order",
+        component: ManageOrder,
+        name: 'mannage-order'
+    },
+    {
+        path: "/admin/mannage-feedback",
+        component: ManageFeedback,
+        name: 'mannage-feedback'
     },
     {
         path: "/admin/detail-book/:id",

@@ -47,53 +47,52 @@
           <p v-html="recipe.ingredients" class="text-gray-700 dark:text-gray-400"></p>
         </div>
       </div>
-
     </div>
-    <el-dialog v-model="centerDialogVisible" width="60%" align-center>
-      <div class="flex items-center justify-between flex-wrap gap-4">
-        <div class="modal-store-craft-images">
-          <Splide
-              :options="sliderMainOption"
-              class="text-center"
-              ref="mainSlider"
-              id="main-slider"
-          >
-            <SplideSlide
-                style="background: #dbdada"
-                v-for="item in recipe.images"
-                :key="index"
-            >
-              <img
-                  class="w-full rounded-lg h-[500px] object-contain"
-                  :src="item.image"
-                  alt
-              />
-            </SplideSlide>
-          </Splide>
+<!--    <el-dialog v-model="centerDialogVisible" width="60%" align-center>-->
+<!--      <div class="flex items-center justify-between flex-wrap gap-4">-->
+<!--        <div class="modal-store-craft-images">-->
+<!--          <Splide-->
+<!--              :options="sliderMainOption"-->
+<!--              class="text-center"-->
+<!--              ref="mainSlider"-->
+<!--              id="main-slider"-->
+<!--          >-->
+<!--            <SplideSlide-->
+<!--                style="background: #dbdada"-->
+<!--                v-for="item in recipe.images"-->
+<!--                :key="index"-->
+<!--            >-->
+<!--              <img-->
+<!--                  class="w-full rounded-lg h-[500px] object-contain"-->
+<!--                  :src="item.image"-->
+<!--                  alt-->
+<!--              />-->
+<!--            </SplideSlide>-->
+<!--          </Splide>-->
 
-          <div class="thumb-slider-wrap">
-            <Splide
-                :options="sliderThumbOptions"
-                ref="mainSlider1"
-                id="thumbnail-slider"
-            >
-              <SplideSlide
-                  v-for="item in recipe.images"
-                  :key="index"
-                  class="mt-2"
-              >
-                <img
-                    @click="index = i"
-                    class="rounded-lg h-[85px] w-[120px] object-cover"
-                    :src="item.image"
-                    alt
-                />
-              </SplideSlide>
-            </Splide>
-          </div>
-        </div>
-      </div>
-    </el-dialog>
+<!--          <div class="thumb-slider-wrap">-->
+<!--            <Splide-->
+<!--                :options="sliderThumbOptions"-->
+<!--                ref="mainSlider1"-->
+<!--                id="thumbnail-slider"-->
+<!--            >-->
+<!--              <SplideSlide-->
+<!--                  v-for="item in recipe.images"-->
+<!--                  :key="index"-->
+<!--                  class="mt-2"-->
+<!--              >-->
+<!--                <img-->
+<!--                    @click="index = i"-->
+<!--                    class="rounded-lg h-[85px] w-[120px] object-cover"-->
+<!--                    :src="item.image"-->
+<!--                    alt-->
+<!--                />-->
+<!--              </SplideSlide>-->
+<!--            </Splide>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
   </LayoutCustomer>
 </template>
 

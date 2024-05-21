@@ -274,6 +274,20 @@ const addToCart = (id) => {
   if (!books.includes(id)) {
     // Nếu chưa tồn tại, thêm ID của sách mới vào mảng
     books.push(id);
+    ElNotification({
+      title: "Success",
+      message: 'Add to cart successfully',
+      type: "success",
+      zIndex: 10000
+    })
+
+  }else {
+    ElNotification({
+      title: "Warning",
+      message: 'Products already in the cart',
+      type: "warning",
+      zIndex: 10000
+    })
   }
 
 

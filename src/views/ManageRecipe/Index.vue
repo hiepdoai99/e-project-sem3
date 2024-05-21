@@ -4,7 +4,7 @@
       <div class="p-4 ">
         <h1 class="font-semibold text-2xl">Manage Recipe</h1>
       </div>
-      <div class="mt-6 ml-6 mr-6">
+      <div class="mt-6 ml-6 mr-6 mb-4">
         <div class="w-full mb-4">
           <el-button type="primary" @click="formRecipe = true">
           Add Recipe
@@ -27,26 +27,40 @@
             color: '#000000D9',
           }"
         >
-          <el-table-column prop="authorName" label="Created by" width="180"></el-table-column>
-          <el-table-column prop="title" label="Title" width="180" ></el-table-column>
-          <el-table-column prop="shortDescription" label="ShortDescription" width="180"></el-table-column>
-          <el-table-column prop="type" label="Type" width="180">
+          <el-table-column prop="authorName" label="Created by" ></el-table-column>
+          <el-table-column  label="Title"  >
+            <template #default="{ row }">
+              <span class="line-clamp-2">{{ row.title }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="type" label="Type" >
             <template #default="{ row }">
               <span>{{ typeRecipe[row.type].name }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="createdAt" label="CreatedAt" width="180">
+          <el-table-column prop="createdAt" label="CreatedAt" >
             <template #default="{ row }">
               <span>{{ formatDate(new Date(row.createdAt)) }}</span>
             </template>
           </el-table-column>
           <el-table-column label="Action" >
             <template #default="{ row }">
-              <el-button type="primary"  @click="handleEdit(row)">Edit</el-button>
-              <el-button type="danger"  @click="handleDelete(row)">Delete</el-button>
+              <el-button type="primary" :icon="Edit" @click="handleEdit(row.id)"></el-button>
+              <el-button type="danger"  :icon="Delete" @click="showPopupDelete(row.id)"></el-button>
             </template>
           </el-table-column>
         </el-table>
+        <div class="flex justify-between items-center w-full mt-2 mr-6  text-[#797588]">
+          <div></div>
+          <div class="flex gap-2 mr-6">
+            <button @click="previous" class="bg-gray-300 rounded-lg text-indigo-600 px-3 py-1 items-center justify-center ">
+              Previous
+            </button>
+            <button @click="next" class="bg-gray-300 rounded-lg px-3 text-indigo-600 py-1 items-center justify-center ">
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <el-dialog
@@ -200,6 +214,22 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <el-dialog style="border-radius: 8px" v-model="popupDelete" title="Confirm delete" width="400">
+      <p class="text-center  ">Are you sure delete<span class="font-semibold"></span>
+      </p>
+      <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="popupDelete = false"
+                                   style="background: #1F1B540D;width: 47.5%;height: 40px; border-radius: 8px">
+                          Cancel
+                        </el-button>
+                          <el-button style="width: 47.5%;height: 40px;border-radius: 8px" type="danger"
+                                     @click="confirmDelete">
+                         Confirm
+                        </el-button>
+                      </span>
+      </template>
+    </el-dialog>
   </LayoutAdmin>
 </template>
 
@@ -208,10 +238,34 @@ import LayoutAdmin from "../../layouts/LayoutAdmin.vue";
 import {ref, onMounted, onBeforeMount, reactive} from "vue";
 import {$axios} from "../../utils/request";
 import {$ax} from "../../utils/requestPost";
+import router from "../../router";
+
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const editor = ClassicEditor;
+import { Edit } from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue'
+
 
 const recipes = ref()
+const listRecipes = ref()
+const popupDelete = ref(false);
+const idDelete = ref()
+const showPopupDelete = (id) => {
+  popupDelete.value = true;
+  idDelete.value = id;
+}
+
+const confirmDelete = () => {
+  $axios.delete('Recipes/' + idDelete.value)
+      .then((data) => {
+        popupDelete.value = false;
+        getRecipes()
+      })
+}
+
+const handleEdit = (id) => {
+  router.push({name: 'detail-recipe', params: {id: id}})
+}
 const typeRecipe = {
   0: {
     name: 'Premium'
@@ -226,11 +280,22 @@ const typeRecipe = {
     name: 'Winner'
   },
 }
+const page = ref(1);
 const getRecipes = async () => {
-  await $axios.get('Recipes/Admin')
+  await $axios.get('Recipes/Admin?from=Admin&PerPage=7&PageNo=' + page.value)
       .then((data) => {
-        recipes.value = data.data;
+        recipes.value = data.data.items;
+        listRecipes.value = data.data;
+
       });
+}
+const previous = () => {
+  page.value = page.value - 1
+  getRecipes()
+}
+const next = () => {
+  page.value = page.value + 1
+  getRecipes()
 }
 onBeforeMount(() => {
   getRecipes()

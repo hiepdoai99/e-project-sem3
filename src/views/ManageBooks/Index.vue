@@ -22,17 +22,29 @@
             color: '#000000D9',
           }"
         >
-          <el-table-column prop="isbn" label="Created by" width="180"></el-table-column>
-          <el-table-column prop="title" label="Title" width="180" ></el-table-column>
-          <el-table-column prop="price" label="Price" width="180"></el-table-column>
-          <el-table-column prop="description" label="Description" width="180"></el-table-column>
-          <el-table-column prop="stock" label="Stock" width="180"></el-table-column>
-          <el-table-column label="Action" >
+          <el-table-column prop="isbn" label="Created by" ></el-table-column>
+          <el-table-column  label="Title"  >
             <template #default="{ row }">
-              <el-button type="primary"  @click="handleEdit(row)">Edit</el-button>
-              <el-button type="danger"  @click="handleDelete(row)">Delete</el-button>
+              <span class="line-clamp-2">{{ row.title}}</span>
             </template>
           </el-table-column>
+          <el-table-column  label="Price" >
+            <template #default="{ row }">
+              <span>${{ row.price}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="Description" >
+            <template #default="{ row }">
+              <span class="line-clamp-2">{{ row.description}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="stock" label="Stock" ></el-table-column>
+<!--          <el-table-column label="Action" >-->
+<!--            <template #default="{ row }">-->
+<!--              <el-button type="primary"  @click="handleEdit(row)">Edit</el-button>-->
+<!--              <el-button type="danger"  @click="handleDelete(row)">Delete</el-button>-->
+<!--            </template>-->
+<!--          </el-table-column>-->
         </el-table>
       </div>
     </div>
