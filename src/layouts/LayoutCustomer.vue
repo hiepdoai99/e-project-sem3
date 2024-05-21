@@ -299,6 +299,14 @@ const register = () => {
         window.location.href = data.data;
       }
     })
+      .catch((error) => {
+        ElNotification({
+          title: "Error",
+          message: 'Sign up failed! Please try again!',
+          type: "error",
+          zIndex: 10000
+        })
+      });
 };
 
 const login = () => {
@@ -307,7 +315,6 @@ const login = () => {
     password: formState.password
   })
     .then((data) => {
-
       if (data.data.accessToken) {
         localStorage.setItem('token', data.data.accessToken)
         localStorage.setItem('user', data.data.user)
@@ -326,7 +333,6 @@ const checkUser = async () => {
       user.value = data;
       localStorage.setItem('user', JSON.stringify(data))
     } catch (error) {
-      console.error('Lấy thông tin người dùng thất bại:', error);
       localStorage.removeItem('token');
       user.value = null;
     }

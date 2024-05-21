@@ -151,7 +151,6 @@ const getRecipes = async () => {
   await $axios.get('Recipes/' + id )
       .then((data) => {
         recipe.value = data.data;
-        console.log(recipe.value);
       });
 }
 

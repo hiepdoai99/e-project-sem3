@@ -22,25 +22,51 @@
             color: '#000000D9',
           }"
         >
-          <el-table-column prop="name" label="name" width="180"></el-table-column>
-          <el-table-column prop="username" label="username" width="180" ></el-table-column>
-          <el-table-column prop="email" label="email" width="180"></el-table-column>
-          <el-table-column prop="isActivated" label="isActivated" width="180"></el-table-column>
-          <el-table-column prop="subscriptions" label="subscriptions" width="180"></el-table-column>
-          <el-table-column prop="createdAt" label="createdAt" width="180">
-            <template #default="{ row }">
-              <span>{{ formatDate(new Date(row.createdAt)) }}</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="name" label="Name" ></el-table-column>
+          <el-table-column prop="username" label="Username"  ></el-table-column>
+          <el-table-column prop="email" label="email" ></el-table-column>
+          <el-table-column prop="isActivated" label="Activated" ></el-table-column>
           <el-table-column label="Action" >
             <template #default="{ row }">
-              <el-button type="primary"  @click="handleEdit(row)">Edit</el-button>
-              <el-button type="danger"  @click="handleDelete(row)">Delete</el-button>
+              <el-button v-if="row.isActivated" type="danger"  :icon="CloseBold"  @click="showPopupDelete(row.id)"></el-button>
+              <el-button v-if="!row.isActivated" type="success"  :icon="Select"  @click="showPopupActive(row.id)"></el-button>
             </template>
           </el-table-column>
         </el-table>
       </div>
     </div>
+    <el-dialog style="border-radius: 8px" v-model="popupDelete" title="Deactivate user" width="400">
+      <p class="text-center  ">Are you sure deactivate<span class="font-semibold"></span>
+      </p>
+      <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="popupDelete = false"
+                                   style="background: #1F1B540D;width: 47.5%;height: 40px; border-radius: 8px">
+                          Cancel
+                        </el-button>
+                          <el-button style="width: 47.5%;height: 40px;border-radius: 8px" type="danger"
+                                     @click="confirmDelete">
+                         Confirm
+                        </el-button>
+                      </span>
+      </template>
+    </el-dialog>
+    <el-dialog style="border-radius: 8px" v-model="popupActive" title="Active user" width="400">
+      <p class="text-center  ">Are you sure Active<span class="font-semibold"></span>
+      </p>
+      <template #footer>
+                      <span class="dialog-footer">
+                        <el-button @click="popupActive = false"
+                                   style="background: #1F1B540D;width: 47.5%;height: 40px; border-radius: 8px">
+                          Cancel
+                        </el-button>
+                          <el-button style="width: 47.5%;height: 40px;border-radius: 8px" type="success"
+                                     @click="confirmActive">
+                         Confirm
+                        </el-button>
+                      </span>
+      </template>
+    </el-dialog>
   </LayoutAdmin>
 </template>
 
@@ -48,9 +74,36 @@
 import LayoutAdmin from "../../layouts/LayoutAdmin.vue";
 import {ref, onMounted, onBeforeMount} from "vue";
 import {$axios} from "../../utils/request";
+import { Select } from '@element-plus/icons-vue'
+import { CloseBold } from '@element-plus/icons-vue'
 
 const users = ref()
-
+const popupDelete = ref(false);
+const idDelete = ref()
+const showPopupDelete = (id) => {
+  popupDelete.value = true;
+  idDelete.value = id;
+}
+const confirmDelete = () => {
+  $axios.patch('Users/' + idDelete.value)
+      .then((data) => {
+        popupDelete.value = false;
+        getUsers()
+      })
+}
+const popupActive = ref(false);
+const idActive = ref()
+const showPopupActive = (id) => {
+  popupActive.value = true;
+  idActive.value = id;
+}
+const confirmActive = () => {
+  $axios.patch('Users/' + idActive.value)
+      .then((data) => {
+        popupActive.value = false;
+        getUsers()
+      })
+}
 const getUsers = async () => {
   await $axios.get('Users')
       .then((data) => {

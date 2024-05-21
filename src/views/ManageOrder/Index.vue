@@ -39,6 +39,18 @@
         </el-table>
       </div>
     </div>
+    <div class="flex justify-between items-center w-full mt-2 mr-14  text-[#797588]">
+      <div></div>
+      <div class="flex gap-2 mr-14">
+        <button @click="previous" class="bg-gray-300 rounded-lg text-indigo-600 px-3 py-1 items-center justify-center ">
+          Previous
+        </button>
+        <button @click="next" class="bg-gray-300 rounded-lg px-3 text-indigo-600 py-1 items-center justify-center ">
+          Next
+        </button>
+      </div>
+    </div>
+
     <el-dialog style="border-radius: 8px" v-model="popupEdit" title="Update status" width="400">
       <el-select v-model="status" placeholder="Please select a status">
         <el-option v-for="item in listStatus" :key="item.id" :label="item.name" :value="item.id">
@@ -78,8 +90,17 @@ const showPopup = (id) => {
   popupEdit.value = true
   idUpdate.value = id
 }
+const previous = () => {
+  page.value = page.value - 1
+  getOrders()
+}
+const next = () => {
+  page.value = page.value + 1
+  getOrders()
+}
+const page = ref(1);
 const getOrders = async () => {
-  await $axios.get('Order')
+  await $axios.get('Order?PerPage=7&PageNo='+ page.value)
       .then((data) => {
         orders.value = data.data.items;
       });
