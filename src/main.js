@@ -4,10 +4,9 @@ import "./index.css";
 import router from "./router";
 import ElementPlus from 'element-plus'
 import CKEditor from "@ckeditor/ckeditor5-vue";
+import {ElNotification} from "element-plus";
 
 const app = createApp(App);
-
-
 
 app.use(router)
     .use(ElementPlus)

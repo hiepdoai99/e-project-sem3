@@ -11,19 +11,19 @@
             <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
               Name
             </label>
-            <input v-model="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Name">
+            <input v-model="formState.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Name">
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
               Email
             </label>
-            <input v-model="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email">
+            <input v-model="formState.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email">
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="message">
               Message
             </label>
-            <textarea v-model="message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" type="text" placeholder="Message"></textarea>
+            <textarea v-model="formState.message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" type="text" placeholder="Message"></textarea>
           </div>
           <div class="flex items-center justify-center">
             <button @click="submitForm" class="bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 w-[200px] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
@@ -38,14 +38,32 @@
 
 <script setup>
 import LayoutCustomer from "../../layouts/LayoutCustomer.vue";
-import { ref } from 'vue';
+import { ref,reactive } from 'vue';
+import {$axios} from "../../utils/request";
 
-const name = ref('');
-const email = ref('');
-const message = ref('');
+const formState = reactive({
+  name:'',
+  email:'',
+  message:'',
+})
 
 const submitForm = () => {
-
+  $axios.post('FeedBacks', {
+    name:formState.name,
+    email:formState.email,
+    content:formState.message,
+  })
+      .then((data) => {
+        ElNotification({
+          title: "Success",
+          message: 'Feedback send successfully',
+          type: "success",
+          zIndex: 10000
+        })
+        formState.name = ''
+        formState.email = ''
+        formState.message = ''
+      })
 }
 </script>
 

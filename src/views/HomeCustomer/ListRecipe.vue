@@ -1,6 +1,6 @@
 <template>
   <LayoutCustomer>
-    <div class="px-[120px] mt-[32px]  flex gap-4">
+    <div class="px-[120px] mt-[32px] flex-col flex gap-4">
         <div class=" flex gap-4 flex-wrap">
           <div v-for="recipe in recipes" :key="recipe.in"
                class="w-[24%] bg-white border border-gray-100 rounded-lg shadow-xl">
@@ -10,9 +10,9 @@
             </div>
             <div class="p-5">
               <a href="#">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-10">{{ recipe.title }}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 line-clamp-2 h-16">{{ recipe.title }}</h5>
               </a>
-              <p v-html="recipe.shortDescription" class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6 line-clamp-2 h-10"></p>
+              <p v-html="recipe.shortDescription" class="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-6 line-clamp-2 h-12"></p>
                 <a href="#" @click="getDetailRecipe(recipe.id, recipe.type)"
                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r hover:bg-gradient-to-l from-violet-500 to-fuchsia-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Read more
@@ -26,7 +26,17 @@
             </div>
           </div>
         </div>
-
+      <div class="flex justify-between items-center w-full  text-[#797588]">
+        <div></div>
+        <div class="flex gap-2 mr-6">
+          <button :disabled="page < 1" @click="previous" class="bg-gray-300 rounded-lg text-indigo-600 px-3 py-1 items-center justify-center ">
+            Previous
+          </button>
+          <button @click="next" class="bg-gray-300 rounded-lg px-3 text-indigo-600 py-1 items-center justify-center ">
+            Next
+          </button>
+        </div>
+      </div>
     </div>
     <el-dialog
         v-model="showLogin"
@@ -69,7 +79,13 @@ import LayoutCustomer from "../../layouts/LayoutCustomer.vue";
 import {ref, onMounted, onBeforeMount,reactive} from "vue";
 import {$axios} from "../../utils/request";
 import router from "../../router";
+import { ArrowLeftBold } from '@element-plus/icons-vue'
+import { ArrowRightBold } from '@element-plus/icons-vue'
+import { ArrowDownBold } from '@element-plus/icons-vue'
+
 const recipes = ref()
+const listRecipes = ref()
+
 const login = () => {
   $axios.post('Auth/Login/', {
     username:formState.username,
@@ -89,14 +105,24 @@ const formState = reactive({
   username: '',
   password: '',
 });
+const page = ref(1)
 
 const showLogin = ref(false);
 
 const getRecipes = async () => {
-  await $axios.get('Recipes')
+  await $axios.get('Recipes/?PerPage=8&PageNo=' + page.value)
       .then((data) => {
         recipes.value = data.data.items;
+        listRecipes.value = data.data;
       });
+}
+const previous = () => {
+    page.value = page.value - 1
+    getRecipes()
+}
+const next = () => {
+  page.value = page.value + 1
+  getRecipes()
 }
 onBeforeMount(() => {
   getRecipes()
